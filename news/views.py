@@ -4,7 +4,7 @@ from django.http  import HttpResponse
 import datetime as dt
 
 # Create your views here.
-def welcome(request):
+def news_today(request):
     return render(request, 'welcome.html')
 
 def news_of_day(request):
