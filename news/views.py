@@ -3,13 +3,21 @@ from django.http  import HttpResponse,Http404
 from django.http  import HttpResponse
 from .models import Article
 import datetime as dt
+from .forms import NewsLetterForm
 
 # Create your views here.
 
 def news_today(request):
     date = dt.date.today()
     news = Article.todays_news()
-    return render(request, 'all-news/today-news.html', {"date": date,"news":news})
+    if request.method == 'POST':
+        form = NewsLetterForm(request.POST)
+        if form.is_valid():
+            print('valid')
+    else:
+        form = NewsLetterForm()
+    return render(request, 'all-news/today-news.html', {"date": date,"news":news,"letterForm":form})
+    # return render(request, 'all-news/today-news.html', {"date": date,"news":news})
 
 def past_days_news(request, past_date):
     try:
